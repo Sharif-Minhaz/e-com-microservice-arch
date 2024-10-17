@@ -2,7 +2,12 @@ import express, { RequestHandler } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
-import { createInventory, updateInventory } from "./controllers";
+import {
+	createInventory,
+	updateInventory,
+	getInventoryById,
+	getInventoryDetails,
+} from "./controllers";
 
 dotenv.config();
 
@@ -21,7 +26,10 @@ app.get("/health", (req, res) => {
 
 app.put("/inventories/:id", updateInventory as RequestHandler);
 app.post("/inventories", createInventory as RequestHandler);
+app.get("/inventories/:id", getInventoryById as RequestHandler);
+app.get("/inventories/:id/details", getInventoryDetails as RequestHandler);
 
+// 404 handler
 // 404 handler
 app.use((_req, res, _next) => {
 	res.status(404).json({ success: false, message: "Route not found" });
