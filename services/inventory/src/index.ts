@@ -24,6 +24,17 @@ app.get("/health", (req, res) => {
 	res.json({ status: "UP" });
 });
 
+app.use((req, res, next) => {
+	const allowedOrigins = ["http://localhost:8081", "http://127.0.0.1:8081"];
+	const origin = req.headers.origin || "";
+	if (allowedOrigins.includes(origin)) {
+		res.setHeader("Access-Control-Allow-Origin", origin);
+		next();
+	} else {
+		res.status(403).json({ message: "Forbidden" });
+	}
+});
+
 app.put("/inventories/:id", updateInventory as RequestHandler);
 app.post("/inventories", createInventory as RequestHandler);
 app.get("/inventories/:id", getInventoryById as RequestHandler);

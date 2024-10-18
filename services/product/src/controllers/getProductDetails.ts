@@ -36,8 +36,6 @@ const getProductDetails = async (req: Request, res: Response, next: NextFunction
 			`${process.env.INVENTORY_URL}/inventories/${product.inventoryId}`
 		);
 
-		console.log(data);
-
 		res.status(200).json({
 			success: true,
 			product: {
@@ -47,6 +45,7 @@ const getProductDetails = async (req: Request, res: Response, next: NextFunction
 			},
 		});
 	} catch (error) {
+		console.error(error);
 		next(error);
 	}
 };
